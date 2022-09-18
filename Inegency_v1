@@ -1,0 +1,67 @@
+Title: Indigency "Flowchart"
+Author: [your name]
+Before: <link rel="stylesheet" type="text/css" href="https://suffolklitlab.org/howto/qna/style/style.css">
+<div id="icon" style="background-size: 110px 99px;background-image: url('https://suffolklitlab.org/howto/qna/images/maxheadroom.gif');"></div>
+<h2 style="text-align:center;">Indigency "Flowchart"</h2>
+<p><b>This is a <a href="https://www.codingthelaw.org/level/2/#mission_p1">class project</a>. You should not rely on it as a source of legal information!</b></p>
+<p>Answer the following questions to see if you qualify for appointed counsel in [insert state name].</p>
+Q(1): Do you live alone?
+A:Yes
+	Q(1.1): Does your annual income exceed $23.803? (please also consider Social Security, Unemplyment and Veterans Benefits)
+	A:Yes
+		Q(1.1.1): Would providing counsel on your own expense present you with with substantial hardship in providing basic economic necessities to yourself or you or your dependent family?
+		A:Yes
+			Q(1.1.1.1):It seems like you are eligible for assigned counsel.
+		A:No
+	A: No
+		Q(1.1.2): Do you have any financial resources that could pay for legal and other services that may be provided by the state without creating substantial hardship in providing basic economic necesseties to you or your family?
+		A:No
+		A:Yes
+			Q(savings1):How much?
+			X:
+				Q(1.1.2.2.1): It seems like you are eligible for assigned counsel but will have to repay the state up to <x>savings1</x> dollars for received services.
+A:No
+	Q(1.2):How many people live  in your household with you?
+	A:One
+		Q(1.2.1): Is you annual householf income more than $29,939 ? (please also consider Social Security, Unemplyment and Veterans Benefits)
+		A:Yes
+			Q(1.2.1.1): Would providing counsel on your own expense present you with with substantial hardship in providing basic economic necessities to yourself or you or your dependent family?
+			A:Yes
+				Q(1.2.1.1.1):It seems like you are eligible for assigned counsel.
+			A:No
+		A:No
+			Q(1.2.1.2):Do you have any financial resources that could pay for legal and other services that may be provided by the state without creating substantial hardship in providing basic economic necesseties to you or your family?
+			A:No
+			A:Yes
+				Q(savings2):How much?
+				X:
+					Q(1.2.1.2.2.1): It seems like you are eligible for assigned counsel but will have to repay the state up to <x>savings2</x> dollars for received services.
+	A:Two
+		Q(1.2.2): Is you annual householf income more than $36,075 ?(please also consider Social Security, Unemplyment and Veterans Benefits)
+		A:Yes
+			Q(1.2.2.1): Would providing counsel on your own expense present you with with substantial hardship in providing basic economic necessities to yourself or you or your dependent family?
+			A:Yes
+				Q(1.2.2.1.1):It seems like you are eligible for assigned counsel.
+			A:No
+		A:No
+			Q(1.2.2.2):Do you have any financial resources that could pay for legal and other services that may be provided by the state without creating substantial hardship in providing basic economic necesseties to you or your family?
+			A:No
+			A:Yes
+				Q(savings3):How much?
+				X:
+					Q(1.2.2.2.2.1): It seems like you are eligible for assigned counsel but will have to repay the state up to <x>savings3</x> dollars for received services.
+
+	A:Three
+		Q(1.2.3): Is you annual householf income more than $42.211? (please also consider Social Security, Unemployment and Veterans Benefits)
+		A:Yes
+			Q(1.2.3.1):Would providing counsel on your own expense present you with with substantial hardship in providing basic economic necessities to yourself or you or your dependent family?
+			A:No
+			A:Yes
+				Q(1.2.3.1.2):It seems like you are eligible for assigned counsel.
+		A:No
+			Q(1.2.3.2):Do you have any financial resources that could pay for legal and other services that may be provided by the state without creating substantial hardship in providing basic economic necesseties to you or your family?
+			A:No
+			A:Yes
+				Q(savings4):How much?
+				X:
+					Q(1.2.3.2.2.1): It seems like you are eligible for assigned counsel but will have to repay the state up to <x>savings4</x> dollars for received services.
