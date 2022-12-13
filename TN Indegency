@@ -1,0 +1,65 @@
+Title: TN Indegency Calculator
+Author:
+Description:TN Indegency Calculator
+<script>
+function fedpov(house,income,percentage){
+var line = NaN;
+
+		if (house == 1) {
+			line = 13590;
+		} else if (house == 2) {
+			line = 18310;
+		} else if (house == 3) {
+			line = 23030;
+		} else if (house == 4) {
+			line = 27750;
+		} else if (house == 5) {
+			line = 32470;
+		} else if (house == 6) {
+			line = 37190;
+		} else if (house == 7) {
+			line = 41910;
+		} else if (house == 8) {
+			line = 44630;
+		} else if (house > 8) {
+			line = 44660 + (house-8)*4720;
+		}
+
+		if (income <= (line*(percentage/100))) {
+			return true;
+		} else {
+			return false;
+		}
+
+
+</script>
+
+
+
+
+
+
+Q(house):How many people live in the household altogether?
+
+X:number
+	Q(1.1):GOTO:income
+
+Q(income):What is the Annual Income of the Household? Please Only Provide Numbers. If the case concerns a victim of domestic violence, only provide their personal income.
+X:number
+	Q(Household_Income_Check):Is the Answer $ <x>income</x> ?
+	
+
+	A[javascript:if (fedpov(getvar('house'),getvar('income'),125)){ goto('qual') } else if (fedpov(getvar('house'),getvar('income'),200)) { goto('qualbut') } else { goto('noqual') } ]:Yes
+
+
+
+
+
+
+
+Q(qual): According to the information provided, the income of the individual qualifies according to Federal Poverty Guideline Data.
+
+Q(qualbut): The income of the indivdual does not automatically qualify according to Federal Poverty Guideline Data. Please take a look at the following circumstances.
+
+Q(nonqual): The income of the individual does not qualify according to Federal Poverty Guideline Data. However, they might qualify according to Living Wage Gudelines.
+
