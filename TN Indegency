@@ -30,13 +30,32 @@ var line = NaN;
 		} else {
 			return false;
 		}
+}
 
 
 </script>
 
+<script>
+function lwageoneadult(children,wage){
+	if (children==0)  {
 
+		if (wage<17){
+			return true;
+		} else {
+			return false;
+		}
+	} else if(children==1){
 
+		if (wage<17){
+			return true;
+		} else {
+			return false;
+		}
+	}
 
+}
+
+</script>
 
 
 Q(house):How many people live in the household altogether?
@@ -49,7 +68,8 @@ X:number
 	Q(Household_Income_Check):Is the Answer $ <x>income</x> ?
 	
 
-	A[javascript:if (fedpov(getvar('house'),getvar('income'),125)){ goto('qual') } else if (fedpov(getvar('house'),getvar('income'),200)) { goto('qualbut') } else { goto('noqual') } ]:Yes
+	A[javascript: if(fedpov(getvar('house'),getvar('income'),125)) {goto('qual')}else if (fedpov(getvar('house'),getvar('income'),200)) { goto('noqualbut') } else { goto('noqualcrim') }  ]: Yes
+
 
 
 
@@ -59,7 +79,27 @@ X:number
 
 Q(qual): According to the information provided, the income of the individual qualifies according to Federal Poverty Guideline Data.
 
-Q(qualbut): The income of the indivdual does not automatically qualify according to Federal Poverty Guideline Data. Please take a look at the following circumstances.
+Q(noqualbut): The income of the indivdual does not automatically qualify according to Federal Poverty Guideline Data. Please take a look at the following circumstances.
 
-Q(nonqual): The income of the individual does not qualify according to Federal Poverty Guideline Data. However, they might qualify according to Living Wage Gudelines.
+Q(noqualcrim): The income of the individual does not qualify according to Federal Poverty Guideline Data. However, they might qualify according to Living Wage Gudelines.
 
+Q(employed): Is the individual currently employed? 
+
+A:Yes
+
+	GOTO: Q(wage)
+	
+	Q(wage):What is the hourly wage of the individual?
+	X:numbers
+	Q(numberchilren): How many children does the individual have?
+	X:numbers
+	Q(wage): How many adults are in the household? Do they work?
+	
+	A: One working adult. [javascript: if
+
+	A: Two Adults, one of whom are working.
+
+	A: Two adults, both of them working.
+
+
+No: GOTO: Q(assetceiling)
