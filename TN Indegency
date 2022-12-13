@@ -165,6 +165,7 @@ A:Let's proceed
 	Q(qual.1):GOTO:employed
 
 DOC(4):Consider the following
+
 Q(noqualbut): The income of the indivdual does not automatically qualify according to Federal Poverty Guideline Data. Please take a look at the following circumstances.
 
 A[javascript:alert(doc(4.1));]:Let's see those circumstances
@@ -204,13 +205,13 @@ X:number
 
 Q(adults): How many adults are in the household? Do they work?
 	
-A: One working adult.
+A[javascript:if (lwageoneadult(getvar('wage'),getvar('children'),true)){ goto('lwagequal') } else { goto('lwagenoqual') } ]:One working adult.
 
 	
-A: Two Adults, one of whom are working.
+A[javascript:if (lwagetwoadultone(getvar('wage'),getvar('children'),true)){ goto('lwagequal') } else { goto('lwagenoqual') } ]:: Two Adults, one of whom are working.
 
 	
-A: Two adults, both of them working.
+A[javascript:if (lwagetwoadulttwo(getvar('wage'),getvar('children'),true)){ goto('lwagequal') } else { goto('lwagenoqual') } ]: Two adults, both of them working.
 
 Q(lwagequal): The individual is eligible according to living wage guidelines.
 A:Let's proceed to assetceiling evaluation.
@@ -221,5 +222,21 @@ Q(lwagenoqual): The Individual is eligible according to living wage guidelines.
 
 A:Lets's proceed to asset ceiling evaluation.
 	Q(11.1):GOTO:assetceiling
-Q(assetceiling): What are assets?
+Q(assetceiling): What are the individuals assets? Please provide them by categories:
 
+Q(cash): What are the individuals reserves in cash, checks, money in deposits or stocks/bonds?
+X:number
+	Q(cash.1):GOTO:homezero
+
+DOC(14):Consider the following exceptions!
+Q(homezero): What is the individuals equity in a house after considering the relevant exceptions?
+A[javascript:alert(doc(4.1));]:Let's see the exceptions.
+DOC(15):Up to 50K equity (unlimited if one household member is over 60) in own homes
+
+Q(home):Please insert the value of the individual's equity in any house after applying
+X:
+	Q(home.1):GOTO:transportationzero
+DOC(16):Consider the following exceptions!
+Q(transportationzero):What is the individual's equity in any car, motorbike, ATV while considering the relevant exceptions.
+A[javascript:alert(doc(4.1));]:Let's the see the relevant exceptions.
+DOC(17):Do not include Equity in car that is primary means of transportation
