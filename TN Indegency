@@ -183,7 +183,8 @@ A[javascript:alert(doc(4.1));]:Let's see those circumstances
 Q(noqualcrim): The income of the individual does not qualify according to Federal Poverty Guideline Data. However, they might qualify according to Living Wage Gudelines.
 
 
-
+A:Let's proceed to the Living Wage Guidelines.
+	Q(noqualcrim.1):GOTO:employed
 
 
 
@@ -222,6 +223,15 @@ Q(lwagenoqual): The Individual is eligible according to living wage guidelines.
 
 A:Lets's proceed to asset ceiling evaluation.
 	Q(11.1):GOTO:assetceiling
+
+
+
+
+
+
+
+
+
 Q(assetceiling): What are the individuals assets? Please provide them by categories:
 
 Q(cash): What are the individuals reserves in cash, checks, money in deposits or stocks/bonds?
@@ -239,4 +249,23 @@ X:
 DOC(16):Consider the following exceptions!
 Q(transportationzero):What is the individual's equity in any car, motorbike, ATV while considering the relevant exceptions.
 A[javascript:alert(doc(4.1));]:Let's the see the relevant exceptions.
-DOC(17):Do not include Equity in car that is primary means of transportation
+
+	Q(transportationzero.1):GOTO:transportation
+
+Q(transportation):Please insert the individual's equity in any means of transportation that dooes not fall under the exeptions mentioned above.
+X:number
+	Q(17.1):GOTO:other
+
+Q(otherzero):What are the individual's other assets? Consider the following exeptions.
+
+A:Show me the exeptions.
+
+	Q(otherzero.1):GOTO:other
+
+Q(other): Please insert the individual other assets, that doe not fall under the relevant exeptions.
+
+X:number
+	Q(other.1):GOTO:debt
+
+Q(debt):Please insert the debt the individual has.
+X:number
