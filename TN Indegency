@@ -140,7 +140,7 @@ function lwagetwoadulttwo(children,wage){
 
 </script>
 
-Q(house):How many people live in the household altogether?
+Q(house):How many people live in the household altogether? If the individual lives alone, insert 1.
 
 X:number
 	Q(1.1):GOTO:income
@@ -232,21 +232,23 @@ A:Lets's proceed to asset ceiling evaluation.
 
 
 
-Q(assetceiling): What are the individuals assets? Please provide them by categories:
+Q(assetceiling): What are the individuals assets? Please provide them by the following categories:
+A:Let's proceed.
+	Q(assetceiling.1):GOTO:cash
 
 Q(cash): What are the individuals reserves in cash, checks, money in deposits or stocks/bonds?
 X:number
 	Q(cash.1):GOTO:homezero
 
 DOC(14):Consider the following exceptions!
-Q(homezero): What is the individuals equity in a house after considering the relevant exceptions?
-A[javascript:alert(doc(4.1));]:Let's see the exceptions.
-DOC(15):Up to 50K equity (unlimited if one household member is over 60) in own homes
+Q(homezero): What is the individuals equity in a house after considering the relevant exceptions? Please consider the following exeptions.
+A[javascript:alert(doc(14.1));]:Let's see the exceptions.
+	DOC(14.1):Up to 50K equity, unlimited if one household member is over 60 in own homes
+	Q(home):Please insert the value of the individual's equity in any house after applying
+	X:number
+		Q(home.1):GOTO:transportationzero
 
-Q(home):Please insert the value of the individual's equity in any house after applying
-X:
-	Q(home.1):GOTO:transportationzero
-DOC(16):Consider the following exceptions!
+DOC(15):Consider the following exceptions!
 Q(transportationzero):What is the individual's equity in any car, motorbike, ATV while considering the relevant exceptions.
 A[javascript:alert(doc(4.1));]:Let's the see the relevant exceptions.
 
@@ -254,7 +256,7 @@ A[javascript:alert(doc(4.1));]:Let's the see the relevant exceptions.
 
 Q(transportation):Please insert the individual's equity in any means of transportation that dooes not fall under the exeptions mentioned above.
 X:number
-	Q(17.1):GOTO:other
+	Q(16.1):GOTO:other
 
 Q(otherzero):What are the individual's other assets? Consider the following exeptions.
 
@@ -262,10 +264,22 @@ A:Show me the exeptions.
 
 	Q(otherzero.1):GOTO:other
 
-Q(other): Please insert the individual other assets, that doe not fall under the relevant exeptions.
+Q(other): Please insert the individual other assets, that do not fall under the relevant exeptions.
 
 X:number
 	Q(other.1):GOTO:debt
 
-Q(debt):Please insert the debt the individual has.
+Q(debt):Please insert the debt of the individual.
 X:number
+	Q(19.1):GOTO:calculateind
+
+Q(calculateind):Click proceed to calculate wether the individual's assets qualify for indegency.
+
+A[javascript:if (home+transportation+other-debt>=4050){ goto('assetqual') } else { goto('assetnoqual') } ]: Proceed
+Q(assetnoqual):The assets of the individual/household do not qualify for indegency. Are there any extroadinary expenses to consider (eg. disability)?
+
+A:Yes
+	Q(21.1):GOTO:assetqual
+A:No
+
+Q(assetqual):The assets of the individual/household qualify for indegency.
