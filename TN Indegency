@@ -146,7 +146,7 @@ X:number
 	Q(1.1):GOTO:income
 
 Q(income):What is the Annual Income of the Household? Please Only Provide Numbers. If the case concerns a victim of domestic violence, only provide their personal income.
-A:Tell me what is being counted as wage.
+
 X:number
 	Q(Household_Income_Check):Is the Answer $ <x>income</x> ?
 	
@@ -155,9 +155,9 @@ X:number
 
 
 
+A[javascript: alert('including but not limited to all wages and salaries income from self employment after deductions for business expenses regular payments from govemmental programs for low income persons or persons with disabilities alimony and or child support');]:Tell me what is being counted as wage
 
-
-
+	Q(2.2):GOTO:income
 
 
 Q(qual): According to the information provided, the income of the individual qualifies according to Federal Poverty Guideline Data.
@@ -167,19 +167,18 @@ A:Let's proceed
 
 DOC(4):Consider the following
 
-Q(noqualbut): The income of the indivdual does not automatically qualify according to Federal Poverty Guideline Data. Please take a look at the following circumstances.
+Q(noqualbut): The income of the indivdual does not automatically qualify according to Federal Poverty Guideline Data. Please take a look at the following circumstances to determine if some of the following circumstances might point to eligibility.
 
-A[javascript:alert(doc(4.1));]:Let's see those circumstances
-	DOC(4.1): These are the circumstances to consider:
-	a)
-	b)
-	c)
-	Q(4.1):What do the circumstances of the case point to?
-	A:The circumstances point to eligibility.
-		Q(noqualbut.1):GOTO:qual
+A[javascript: alert('extroadinary cirmustances');]:Let's see those circumstances
 
-	A:The circumstances do not point to eligibility.
-		Q(noqualbut.2):GOTO:noqualcrim
+	Q(4.1):GOTO:noqualbut
+
+	
+A:The circumstances point to eligibility.
+	Q(noqualbut.1):GOTO:qual
+
+A:The circumstances do not point to eligibility.
+	Q(noqualbut.2):GOTO:noqualcrim
 
 Q(noqualcrim): The income of the individual does not qualify according to Federal Poverty Guideline Data. However, they might qualify according to Living Wage Gudelines.
 
@@ -239,48 +238,47 @@ A:Let's proceed.
 
 Q(cash): What are the individuals reserves in cash, checks, money in deposits or stocks/bonds?
 X:number
-	Q(cash.1):GOTO:homezero
+	Q(cash.1):GOTO:home
 
-DOC(14):Consider the following exceptions!
-Q(homezero): What is the individuals equity in a house after considering the relevant exceptions? Please consider the following exeptions.
-A[javascript:alert(doc(3.1));]:Let's see the exceptions.
-	DOC(14.1):Up to 50K equity, unlimited if one household member is over 60 in own homes
-	Q(home):Please insert the value of the individual's equity in any house after applying
-	X:number
-		Q(home.1):GOTO:transportationzero
+Q(home): What is the individuals equity in a house after considering the relevant exceptions? Please consider the following exeptions.
 
-DOC(15):Consider the following exceptions!
-Q(transportationzero):What is the individual's equity in any car, motorbike, ATV while considering the relevant exceptions.
-A[javascript:alert(doc(4.1));]:Let's the see the relevant exceptions.
-	DOC(15.1):These are the exceptions for transportation.
-	Q(transportationzero.1):GOTO:transportation
 
-Q(transportation):Please insert the individual's equity in any means of transportation that dooes not fall under the exeptions mentioned above.
 X:number
-	Q(16.1):GOTO:other
+	Q(home.1):GOTO:transportation
 
-Q(otherzero):What are the individual's other assets? Consider the following exeptions.
 
-A:Show me the exeptions.
+A[javascript: alert('Up to 50K equity, unlimited if one household member is over 60 in own homes');]:Let's see the exceptions.
+	
+	Q(home.2):GOTO:home
+
+Q(transportation):What is the individual's equity in any car, motorbike, ATV while considering the relevant exceptions.
+A[javascript: alert('transportation exeptions');]:Let's the see the relevant exceptions.
+
+	Q(15.1):GOTO:transportation
+
+X:number
+	Q(15.2):GOTO:other
+
+Q(other):What are the individual's other assets? Consider the following exeptions.
+
+A[javascript: alert('other exeptions');]:Show me the exeptions.
 
 	Q(otherzero.1):GOTO:other
-
-Q(other): Please insert the individual other assets, that do not fall under the relevant exeptions.
 
 X:number
 	Q(other.1):GOTO:debt
 
 Q(debt):Please insert the debt of the individual.
 X:number
-	Q(19.1):GOTO:calculateind
+	Q(17.1):GOTO:calculateind
 
 Q(calculateind):Click proceed to calculate wether the individual's assets qualify for indegency.
 
-A[javascript:if (home+transportation+other-debt>=4050){ goto('assetqual') } else { goto('assetnoqual') } ]: Proceed
-Q(assetnoqual):The assets of the individual/household do not qualify for indegency. Are there any extroadinary expenses to consider (eg. disability)?
+A[javascript:if (home+transportation+other-debt>=4050){ goto('assetnoqual') } else { goto('assetqual') } ]: Proceed
+Q(assetnoqual):The assets of the individual/household do not qualify for indegency. Are there any extroadinary expenses to consider (eg. disability) that point to eligibility?
 
 A:Yes
-	Q(21.1):GOTO:assetqual
+	Q(19.1):GOTO:assetqual
 A:No
 
 Q(assetqual):The assets of the individual/household qualify for indegency.
@@ -291,3 +289,5 @@ Q(save)Want to save this conversation, by clicking yes?
 
 A[javascript:save2('transcript.txt', transcript());]:Yes
 A:No thanks
+	Q(20.2):okay, have a nice day.
+
