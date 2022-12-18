@@ -1,6 +1,6 @@
-Title: TN Indegency Calculator
+Title: TN Indigency Calculator
 Author:
-Description:TN Indegency Calculator
+Description:TN Indigency Calculator
 <script>
 function fedpov(house,income,percentage){
 var line = NaN;
@@ -165,17 +165,17 @@ A:Let's proceed
 
 	Q(qual.1):GOTO:employed
 
-Q(noqualbut): The income of the indivdual does not automatically qualify according to Federal Poverty Guideline Data. Please take a look at the following circumstances to determine if some of the following circumstances might point to eligibility.
+Q(noqualbut): The income of the indivdual does not automatically qualify according to Federal Poverty Guideline Data. Please take a look at the following circumstances to determine if some of the following circumstances might point to Indigency.
 
 A[javascript: alert('disability, prospect of reduction in benefits, unreimbursed medical expenses, unpaid taxes, financial obligation, debt, expenses related to employment');]:Show me examples of such circumstances
 
 	Q(4.1):GOTO:noqualbut
 
 	
-A:The circumstances point to eligibility.
+A:The circumstances point to Indigency.
 	Q(noqualbut.1):GOTO:qual
 
-A:The circumstances do not point to eligibility.
+A:The circumstances do not point to Indigency.
 	Q(noqualbut.2):GOTO:noqualcrim
 
 Q(noqualcrim): The income of the individual does not qualify according to Federal Poverty Guideline Data. However, they might qualify according to Living Wage Gudelines.
@@ -212,12 +212,12 @@ A[javascript:if (lwagetwoadultone(getvar('wage'),getvar('children'),true)){ goto
 	
 A[javascript:if (lwagetwoadulttwo(getvar('wage'),getvar('children'),true)){ goto('lwagequal') } else { goto('lwagenoqual') } ]: Two adults, both of them working.
 
-Q(lwagequal): The individual is eligible according to living wage guidelines.
+Q(lwagequal): The individual is indigent according to living wage guidelines.
 A:Let's proceed to assetceiling evaluation.
 	Q(10.1):GOTO:assetceiling
 
 
-Q(lwagenoqual): The Individual is eligible according to living wage guidelines.
+Q(lwagenoqual): The Individual is indigent according to living wage guidelines.
 
 A:Lets's proceed to asset ceiling evaluation.
 	Q(11.1):GOTO:assetceiling
@@ -278,17 +278,19 @@ Q(assetnoqual):The assets of the individual/household do not qualify for indegen
 A:Yes
 	Q(19.1):GOTO:assetqual
 A:No
-	Q(19.2):GOTO:Bye
+	Q(19.2):Do you want to save a copy of this conersation?
+
+	A[javascript:save2('transcript.txt', transcript());]:Yes
+		
+	A:Bye:No thanks
+
+		Q(19.2.2):GOTO:Bye
 
 Q(assetqual):The assets of the individual/household qualify for indegency.
 
 A[javascript:save2('transcript.txt', transcript());]: I would like to save this conversation.
 
-Q(save):Do you want to save this conversation, by clicking yes?
 
-A[javascript:save2('transcript.txt', transcript());]:Yes
-A:No thanks
-	Q(Bye):okay, have a nice day. Do you want to save this conversation?
-	A[javascript:save2('transcript.txt', transcript());]:I would like to save this conversation.
+Q(Bye):okay, have a nice day.
 	
 
