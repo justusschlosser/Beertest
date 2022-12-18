@@ -1,6 +1,7 @@
 Title: TN Indigency Calculator
-Author:
+Author: Justus Schloesser for CJI
 Description:TN Indigency Calculator
+Before: TN Indigency Calculator
 <script>
 function fedpov(house,income,percentage){
 var line = NaN;
