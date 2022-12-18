@@ -145,7 +145,7 @@ Q(house):How many people live in the household altogether? If the individual liv
 X:number
 	Q(1.1):GOTO:income
 
-Q(income):What is the Annual Income of the Household? Please Only Provide Numbers. If the case concerns a victim of domestic violence, only provide their personal income.
+Q(income):What is the Annual Income of the Household in $? If the case concerns a victim of domestic violence, only provide their personal income. Only Provide Numbers.
 
 X:number
 	Q(Household_Income_Check):Is the Answer $ <x>income</x> ?
@@ -155,21 +155,19 @@ X:number
 
 
 
-A[javascript: alert('including but not limited to all wages and salaries income from self employment after deductions for business expenses regular payments from govemmental programs for low income persons or persons with disabilities alimony and or child support');]:Tell me what is being counted as wage
+A[javascript: alert('including but not limited to, all wages and salaries, income from self employment after deductions for business expenses, regular payments from govemmental programs for low income persons or persons with disabilities, alimony and or child support');]:Tell me what is counts as income.
 
 	Q(2.2):GOTO:income
-
-
+A[javascript: alert('the value of food or rent received in lieu of wages money withdrawm from a bank ,tax refunds, gifts, compensation or one time insurance payments received for injuries sustained, non cash benefits, scholarships or grants used for tuition, school fees or textbooks, up to 2,000 a year of funds received by Native Americans from Indian trust income');]:Tell me what is not being counted as income.
+	Q(2.3):GOTO:income
 Q(qual): According to the information provided, the income of the individual qualifies according to Federal Poverty Guideline Data.
 A:Let's proceed
 
 	Q(qual.1):GOTO:employed
 
-DOC(4):Consider the following
-
 Q(noqualbut): The income of the indivdual does not automatically qualify according to Federal Poverty Guideline Data. Please take a look at the following circumstances to determine if some of the following circumstances might point to eligibility.
 
-A[javascript: alert('extroadinary cirmustances');]:Let's see those circumstances
+A[javascript: alert('disability, prospect of reduction in benefits, unreimbursed medical expenses, unpaid taxes, financial obligation, debt, expenses related to employment');]:Show me examples of such circumstances
 
 	Q(4.1):GOTO:noqualbut
 
@@ -247,12 +245,12 @@ X:number
 	Q(home.1):GOTO:transportation
 
 
-A[javascript: alert('Up to 50K equity, unlimited if one household member is over 60 in own homes');]:Let's see the exceptions.
+A[javascript: alert('Up to 50K equity in pricipal residence, unlimited if one household member is over 60');]:Let's see the exceptions.
 	
 	Q(home.2):GOTO:home
 
 Q(transportation):What is the individual's equity in any car, motorbike, ATV while considering the relevant exceptions.
-A[javascript: alert('transportation exeptions');]:Let's the see the relevant exceptions.
+A[javascript: alert('Any equity in a vehicle that is the applicants primary means of transportation');]:Let's the see the relevant exceptions.
 
 	Q(15.1):GOTO:transportation
 
@@ -261,7 +259,7 @@ X:number
 
 Q(other):What are the individual's other assets? Consider the following exeptions.
 
-A[javascript: alert('other exeptions');]:Show me the exeptions.
+A[javascript: alert('Any equity in real estate, equipment and tools used to produce income from employment or self employment, assets of others in the household who are not legally responsible for the individual, equipment needed due to disability;');]:Show me the exeptions.
 
 	Q(otherzero.1):GOTO:other
 
@@ -280,14 +278,17 @@ Q(assetnoqual):The assets of the individual/household do not qualify for indegen
 A:Yes
 	Q(19.1):GOTO:assetqual
 A:No
+	Q(19.2):GOTO:Bye
 
 Q(assetqual):The assets of the individual/household qualify for indegency.
 
+A[javascript:save2('transcript.txt', transcript());]: I would like to save this conversation.
 
-
-Q(save)Want to save this conversation, by clicking yes?
+Q(save):Do you want to save this conversation, by clicking yes?
 
 A[javascript:save2('transcript.txt', transcript());]:Yes
 A:No thanks
-	Q(20.2):okay, have a nice day.
+	Q(Bye):okay, have a nice day. Do you want to save this conversation?
+	A[javascript:save2('transcript.txt', transcript());]:I would like to save this conversation.
+	
 
