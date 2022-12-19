@@ -1,7 +1,8 @@
 Title: TN Indigency Calculator
 Author: Justus Schloesser for CJI
 Description:TN Indigency Calculator
-Before: TN Indigency Calculator
+Before: ***For Informational Purposes Only ***
+You should not rely on this tool as a source of legal information or a legal determination
 <script>
 function fedpov(house,income,percentage){
 var line = NaN;
@@ -146,7 +147,7 @@ Q(house):How many people live in the household altogether? If the individual liv
 X:number
 	Q(1.1):GOTO:income
 
-Q(income):What is the Annual Income of the Household in $? If the case concerns a victim of domestic violence, only provide their personal income. Only Provide Numbers.
+Q(income):How much income does your household bring in per year in AFTER tax dollars? If the case concerns a victim of domestic violence, only provide their personal income. Only Provide Numbers.
 
 X:number
 	Q(Household_Income_Check):Is the Answer $ <x>income</x> ?
@@ -156,7 +157,7 @@ X:number
 
 
 
-A[javascript: alert('including but not limited to, all wages and salaries, income from self employment after deductions for business expenses, regular payments from govemmental programs for low income persons or persons with disabilities, alimony and or child support');]:Tell me what is counts as income.
+A[javascript: alert('including but not limited to, all wages and salaries, income from self employment after deductions for business expenses, regular payments from govemmental programs for low income persons or persons with disabilities, alimony and or child support');]:Tell me what counts as income.
 
 	Q(2.2):GOTO:income
 A[javascript: alert('the value of food or rent received in lieu of wages money withdrawm from a bank ,tax refunds, gifts, compensation or one time insurance payments received for injuries sustained, non cash benefits, scholarships or grants used for tuition, school fees or textbooks, up to 2,000 a year of funds received by Native Americans from Indian trust income');]:Tell me what is not being counted as income.
@@ -166,18 +167,43 @@ A:Let's proceed
 
 	Q(qual.1):GOTO:employed
 
-Q(noqualbut): The income of the indivdual does not automatically qualify according to Federal Poverty Guideline Data. Please take a look at the following circumstances to determine if some of the following circumstances might point to Indigency.
+Q(noqualbut): The income of the indivdual does not automatically qualify according to Federal Poverty Guideline Data. Please click one of the following circumstances that substantially applies to determine if the individual is indigent according to Federal Poverty Guidelines.
 
-A[javascript: alert('disability, prospect of reduction in benefits, unreimbursed medical expenses, unpaid taxes, financial obligation, debt, expenses related to employment');]:Show me examples of such circumstances
 
-	Q(4.1):GOTO:noqualbut
+A:The individual has a disability
 
-	
-A:The circumstances point to Indigency.
-	Q(noqualbut.1):GOTO:qual
+	Q(4.1):GOTO:qual
 
-A:The circumstances do not point to Indigency.
-	Q(noqualbut.2):GOTO:noqualcrim
+A: Prospect of reduction in benefits.
+
+	Q(4.2):GOTO:qual
+
+A: Unreimbursed medical expenses
+
+	Q(4.3):GOTO:qual
+
+A: Unpaid taxes
+
+	Q(4.4):GOTO:qual
+
+A: other financial obligations
+
+	Q(4.5):GOTO:qual
+
+A: Debt
+
+	Q(4.6):GOTO:qual
+
+A:Expenses related to employment
+
+	Q(4.7):GOTO:qual
+
+
+A:None of the circumstances apply.
+
+	Q(4.8):GOTO:noqualcrim
+
+
 
 Q(noqualcrim): The income of the individual does not qualify according to Federal Poverty Guideline Data. However, they might qualify according to Living Wage Gudelines.
 
@@ -208,10 +234,10 @@ Q(adults): How many adults are in the household? Do they work?
 A[javascript:if (lwageoneadult(getvar('wage'),getvar('children'),true)){ goto('lwagequal') } else { goto('lwagenoqual') } ]:One working adult.
 
 	
-A[javascript:if (lwagetwoadultone(getvar('wage'),getvar('children'),true)){ goto('lwagequal') } else { goto('lwagenoqual') } ]:: Two Adults, one of whom are working.
+A[javascript:if (lwagetwoadultone(getvar('wage'),getvar('children'),true)){ goto('lwagequal') } else { goto('lwagenoqual') } ]:Two Adults, one of whom are working.
 
 	
-A[javascript:if (lwagetwoadulttwo(getvar('wage'),getvar('children'),true)){ goto('lwagequal') } else { goto('lwagenoqual') } ]: Two adults, both of them working.
+A[javascript:if (lwagetwoadulttwo(getvar('wage'),getvar('children'),true)){ goto('lwagequal') } else { goto('lwagenoqual') } ]:Two adults, both of them working.
 
 Q(lwagequal): The individual is indigent according to living wage guidelines.
 A:Let's proceed to assetceiling evaluation.
@@ -235,7 +261,7 @@ Q(assetceiling): What are the individuals assets? Please provide them by the fol
 A:Let's proceed.
 	Q(assetceiling.1):GOTO:cash
 
-Q(cash): What are the individuals reserves in cash, checks, money in deposits or stocks/bonds?
+Q(cash): How much do you have in cash, checks, money in deposits or stocks/bonds?
 X:number
 	Q(cash.1):GOTO:home
 
@@ -246,7 +272,7 @@ X:number
 	Q(home.1):GOTO:transportation
 
 
-A[javascript: alert('Up to 50K equity in pricipal residence, unlimited if one household member is over 60');]:Let's see the exceptions.
+A[javascript: alert('Up to 50K equity in principal residence, unlimited if one household member is over 60');]:Let's see the exceptions.
 	
 	Q(home.2):GOTO:home
 
@@ -268,8 +294,14 @@ X:number
 	Q(other.1):GOTO:debt
 
 Q(debt):Please insert the debt of the individual.
-X:number
+
+A[javascript: alert('medical debt, student loans, payday lenders');]:See some examples for debt.
+
 	Q(17.1):GOTO:calculateind
+
+
+X:number
+	Q(17.2):GOTO:calculateind
 
 Q(calculateind):Click proceed to calculate wether the individual's assets qualify for indegency.
 
@@ -293,5 +325,3 @@ A[javascript:save2('transcript.txt', transcript());]: I would like to save this 
 
 
 Q(Bye):okay, have a nice day.
-	
-
