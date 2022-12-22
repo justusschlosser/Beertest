@@ -253,42 +253,43 @@ A:Lets's proceed to asset ceiling evaluation.
 
 
 
-
-
-
-
-Q(assetceiling): What are the individuals assets? Please provide them by the following categories:
+Q(assetceiling): What are the individuals assets? Please provide them by the following categories and carefully consider relevant exeptions:
 A:Let's proceed.
 	Q(assetceiling.1):GOTO:cash
 
 Q(cash): How much do you have in cash, checks, money in deposits or stocks/bonds?
 X:number
-	Q(cash.1):GOTO:home
+	Q(cash.1):GOTO:homezero
 
-Q(home): What is the individuals equity in a house after considering the relevant exceptions? Please consider the following exeptions.
-
-
-X:number
-	Q(home.1):GOTO:transportation
-
+Q(homezero): What is the individuals equity in a house after considering the relevant exceptions? Please consider the following exeptions.
 
 A[javascript: alert('Up to 50K equity in principal residence, unlimited if one household member is over 60');]:Let's see the exceptions.
 	
 	Q(home.2):GOTO:home
 
-Q(transportation):What is the individual's equity in any car, motorbike, ATV while considering the relevant exceptions.
+
+Q(home): What is the individuals equity in real estate after considering the exeptions above?
+X:number
+	Q(home.1):GOTO:transportationzero
+
+
+Q(transportationzero):Before providing the individuals equity in any means of transportation, view the relevant exeptions.
 A[javascript: alert('Any equity in a vehicle that is the applicants primary means of transportation');]:Let's the see the relevant exceptions.
 
-	Q(15.1):GOTO:transportation
+	Q(16.1):GOTO:transportation
 
+Q(transportation):What is the individual's equity in any car, motorbike, ATV after considering the relevant exceptions above.
 X:number
-	Q(15.2):GOTO:other
+	Q(17.1):GOTO:otherzero
 
-Q(other):What are the individual's other assets? Consider the following exeptions.
+Q(otherzero):What are the individual's other assets? Consider the following exeptions first.
+
 
 A[javascript: alert('Any equity in real estate, equipment and tools used to produce income from employment or self employment, assets of others in the household who are not legally responsible for the individual, equipment needed due to disability;');]:Show me the exeptions.
 
 	Q(otherzero.1):GOTO:other
+
+Q(other):What are the individual's other assets that did not fall under any of the previous categories or exeptions?
 
 X:number
 	Q(other.1):GOTO:debt
@@ -297,27 +298,31 @@ Q(debt):Please insert the debt of the individual.
 
 A[javascript: alert('medical debt, student loans, payday lenders');]:See some examples for debt.
 
-	Q(17.1):GOTO:calculateind
+	Q(20.1):GOTO:calculateind
 
 
 X:number
-	Q(17.2):GOTO:calculateind
+	Q(20.2):GOTO:calculateind
 
 Q(calculateind):Click proceed to calculate wether the individual's assets qualify for indegency.
+
+
+
+
 
 A[javascript:if (home+transportation+other-debt>=4050){ goto('assetnoqual') } else { goto('assetqual') } ]: Proceed
 Q(assetnoqual):The assets of the individual/household do not qualify for indegency. Are there any extroadinary expenses to consider (eg. disability) that point to eligibility?
 
 A:Yes
-	Q(19.1):GOTO:assetqual
+	Q(22.1):GOTO:assetqual
 A:No
-	Q(19.2):Do you want to save a copy of this conersation?
+	Q(22.2):Do you want to save a copy of this conersation?
 
 	A[javascript:save2('transcript.txt', transcript());]:Yes
 		
 	A:Bye:No thanks
 
-		Q(19.2.2):GOTO:Bye
+		Q(22.2.2):GOTO:Bye
 
 Q(assetqual):The assets of the individual/household qualify for indegency.
 
